@@ -3,44 +3,51 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>WooCommerceNET</PackageId>
-    <Version>0.8.3</Version>
+    <Version>0.8.7</Version>
     <Authors>JamesYang@NZ</Authors>
     <Company>JamesYang@NZ</Company>
     <Description>A .NET Wrapper for WooCommerce/WordPress REST API</Description>
-    <Copyright>Copyright ©  2015 - 2021 James Yang@NZ</Copyright>
+    <Copyright>Copyright ©  2015 - 2026 James Yang@NZ</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/XiaoFaye/WooCommerce.NET</PackageProjectUrl>
-    <PackageReleaseNotes>WooCommerce.NET is a .NET library for calling WooCommerce/WordPress REST API in .NET applications.
+    <PackageReleaseNotes>
+		WooCommerce.NET is a .NET library for calling WooCommerce/WordPress REST API in .NET applications.
 
-GitHub: https://github.com/XiaoFaye/WooCommerce.NET
-Changes Doc: https://github.com/XiaoFaye/WooCommerce.NET/blob/master/Changes.md
+		GitHub: https://github.com/XiaoFaye/WooCommerce.NET
+		Changes Doc: https://github.com/XiaoFaye/WooCommerce.NET/blob/master/Changes.md
 
-* v0.8.3 update
-  1. Fix error while creating a refund. #476
-  2. Allow authenticate Woocommerce API with JWT (set WCAuthWithJWT to true). #478
-  3. Fix error on retrieving refund. #484
-  4. Fix error on deserialize BatchObject. #523
-  5. Fix error on date format. #524
-  6. Add user-friendly attribute names and values to Metadata. #558
-  7. Change all id field to unsigned 32bit integer to prevent overflow. #560
-  8. Change functions in BaseObject to virtual to support Unit Test. #568
-  9. Add function to delete tax class by slug. #576
-  10. Allow WC Plugins to use WCObject.
-  11. Add UpdateRangeRaw to ignore deserialize return json. #523</PackageReleaseNotes>
+		* v0.8.7 update
+		1. Allow authorized with Application Passwords for WordPress.
+		2. Add support for Brands. #795
+		3. Add Variation GTIN, UPC, EAN o ISBN field.
+		4. Update data type from integer to unsigned long for more fields.
+	</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>0.8.3.0</AssemblyVersion>
+    <AssemblyVersion>0.8.7.0</AssemblyVersion>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>sn.key.snk</AssemblyOriginatorKeyFile>
     <PackageLicenseFile>License.md</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <FileVersion>0.8.3.0</FileVersion>
+    <FileVersion>0.8.7.0</FileVersion>
     <PackageTags>WooCommerce Wordpress Restful API</PackageTags>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="RestClient.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="License.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
