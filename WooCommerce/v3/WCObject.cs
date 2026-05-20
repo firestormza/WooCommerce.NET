@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using WooCommerceNET.Base;
@@ -38,15 +39,17 @@ namespace WooCommerceNET.WooCommerce.v3
         }
 
 
-        public WCObject(RestAPI api)
+        public WCObject(RestAPI api, CultureInfo culture = null)
         {
             if (api.Version != APIVersion.Version3 && api.Version != APIVersion.ThirdPartyPlugins)
                 throw new Exception("Please use WooCommerce Restful API Version 3 url for this WCObject. e.g.: http://www.yourstore.co.nz/wp-json/wc/v3/");
 
+            JsonObject.Culture = culture ?? CultureInfo.InvariantCulture;
+
             API = api;
 
             Coupon = new WCItem<T1>(api);
-            Customer = new WCItem<T2>(api);
+            Customer = new WCCustomerItem(api);
             Product = new WCProductItem(api);
             ProductReview = new WCItem<T4>(api);
             Order = new WCOrderItem(api);
@@ -70,7 +73,7 @@ namespace WooCommerceNET.WooCommerce.v3
 
         public WCItem<T1> Coupon { get; protected set; }
 
-        public WCItem<T2> Customer { get; protected set; }
+        public WCCustomerItem Customer { get; protected set; }
 
         public WCProductItem Product { get; protected set; }
 
@@ -109,6 +112,29 @@ namespace WooCommerceNET.WooCommerce.v3
         public WCItem<Data> Data { get; protected set; }
 
         public WCItem<Plugins> Plugin { get; protected set; }
+
+        public class WCCustomerItem : WCItem<T2>
+        {
+            public WCCustomerItem(RestAPI api) : base(api)
+            {
+                API = api;
+            }
+
+            public virtual async Task<T2> Get(string email, Dictionary<string, string> parms = null)
+            {
+                if (parms == null)
+                    parms = new Dictionary<string, string>();
+
+                parms.Add("email", email);
+
+                var customers = await GetAll(parms);
+
+                if (customers == null || customers.Count == 0)
+                    return null;
+                else
+                    return customers[0];
+            }
+        }
 
         public class WCProductItem : WCItem<T3>
         {
@@ -170,7 +196,7 @@ namespace WooCommerceNET.WooCommerce.v3
     public class WCObject: WCObject<Coupon, Customer, Product, ProductReview, Variation, Order, OrderNote, OrderRefund, ProductAttribute, ProductAttributeTerm, 
                                     ProductCategory, ShippingClass, ProductTag, TaxRate, TaxClass, Data>
     {
-        public WCObject(RestAPI api) : base(api)
+        public WCObject(RestAPI api, CultureInfo culture = null) : base(api, culture)
         {
         }
     }

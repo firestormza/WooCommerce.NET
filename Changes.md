@@ -3,6 +3,27 @@
 
 Version History
 -------------------
+* v0.8.7 update
+  1. Allow authorized with Application Passwords for WordPress.
+  2. Add support for Brands. #795
+  3. Add Variation GTIN, UPC, EAN o ISBN field.
+  4. Update data type from integer to unsigned long for more fields.
+* v0.8.6 update
+  1. Fix manage_stock property deserializing issue in Project object. #722
+  2. Add Culture object in WCObject constructor to resolve format issue. #731
+  3. Allow accessing WordPress plugin REST API with WooCommerce secret and key.
+* v0.8.5 update
+  1. Change all id field to 64bit integer (unsigned long) to prevent overflow. #560
+  2. Add WCCustomerItem for get customer by email endpoint.
+  3. Escape all querystrings.
+* v0.8.4 update
+  1. Change all id field to 64bit integer (unsigned long) to prevent overflow. #560
+  2. Create RestClient.cs to use HttpClient, as Blazor does not support HttpWebRequest. PR#639
+  3. Accept '&' in password while calling WordPress Restful API. PR#527
+  4. Close HttpWebRequest write stream when finish. PR#529
+  5. Add WCObject.MetaDisplayValueProcessor function. PR#600
+  6. Add OrderCouponLineMeta class. PR#600
+  7. Change MetaData.display_value field to type object and run it through MetaDisplayValueProcessor() if configured. PR#600
 * v0.8.3 update
   1. Fix error while creating a refund. #476
   2. Allow authenticate Woocommerce API with JWT (set WCAuthWithJWT to true). #478

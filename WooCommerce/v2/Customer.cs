@@ -17,7 +17,7 @@ namespace WooCommerceNET.WooCommerce.v2
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public long? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// The date the customer was created, in the site’s timezone. 
@@ -292,7 +292,7 @@ namespace WooCommerceNET.WooCommerce.v2
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? product_id { get; set; }
+        public ulong? product_id { get; set; }
 
         /// <summary>
         /// Product name. 
@@ -313,7 +313,7 @@ namespace WooCommerceNET.WooCommerce.v2
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? order_id { get; set; }
+        public ulong? order_id { get; set; }
 
         /// <summary>
         /// Order key. 

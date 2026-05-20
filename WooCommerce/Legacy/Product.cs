@@ -27,7 +27,7 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Product slug 
@@ -320,25 +320,25 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public List<int> related_ids { get; set; }
+        public List<ulong> related_ids { get; set; }
 
         /// <summary>
         /// List of up-sell products IDs (integer). Up-sells are products which you recommend instead of the currently viewed product, for example, products that are more profitable or better quality or more expensive
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public List<int> upsell_ids { get; set; }
+        public List<ulong> upsell_ids { get; set; }
 
         /// <summary>
         /// List of cross-sell products IDs. Cross-sells are products which you promote in the cart, based on the current product
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public List<int> cross_sell_ids { get; set; }
+        public List<ulong> cross_sell_ids { get; set; }
 
         /// <summary>
         /// Product parent ID (post_parent)
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? parent_id { get; set; }
+        public ulong? parent_id { get; set; }
 
         /// <summary>
         /// List of product categories names (string). In write-mode need to pass a array of categories IDs (integer) (uses wp_set_object_terms())
@@ -502,7 +502,7 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// Image ID (attachment ID)
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// UTC DateTime when the image was created 
@@ -670,7 +670,7 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// UTC DateTime when the variation was created 
@@ -876,7 +876,7 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Attribute name
@@ -919,7 +919,7 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Term name 
@@ -958,7 +958,7 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Category name 
@@ -977,7 +977,7 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// Category parent
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? parent { get; set; }
+        public ulong? parent { get; set; }
 
         /// <summary>
         /// Category description
@@ -1013,7 +1013,7 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Shipping Class name 
@@ -1032,7 +1032,7 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// Shipping Class parent
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? parent { get; set; }
+        public ulong? parent { get; set; }
 
         /// <summary>
         /// Shipping Class description
@@ -1056,7 +1056,7 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Tag name 
@@ -1101,7 +1101,7 @@ namespace WooCommerceNET.WooCommerce.Legacy
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// UTC DateTime when the review was created 

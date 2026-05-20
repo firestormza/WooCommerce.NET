@@ -5,13 +5,15 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using WooCommerce.NET.WordPress.v2;
 
 namespace WooCommerceNET.Base
 {
     [DataContract]
     public class JsonObject
     {
+        [IgnoreDataMember]
+        public static CultureInfo Culture { get; set; }
+
         [OnSerializing]
         void OnSerializing(StreamingContext ctx)
         {
@@ -28,13 +30,13 @@ namespace WooCommerceNET.Base
                             GetType().GetTypeInfo().BaseType.FullName.StartsWith("WooCommerceNET.WooCommerce.v1") ||
                             GetType().GetTypeInfo().BaseType.FullName.StartsWith("WooCommerceNET.WooCommerce.v2") ||
                             GetType().GetTypeInfo().BaseType.FullName.StartsWith("WooCommerceNET.WooCommerce.v3"))
-                            objValue.SetValue(this, (pi.GetValue(this) as decimal?).Value.ToString(CultureInfo.InvariantCulture));
+                            objValue.SetValue(this, (pi.GetValue(this) as decimal?).Value.ToString(Culture));
                         else
-                            objValue.SetValue(this, decimal.Parse(pi.GetValue(this).ToString(), CultureInfo.InvariantCulture));
+                            objValue.SetValue(this, decimal.Parse(pi.GetValue(this).ToString(), Culture));
                     }
                     else if (pi.PropertyType == typeof(int?))
                     {
-                        objValue.SetValue(this, int.Parse(pi.GetValue(this).ToString(), CultureInfo.InvariantCulture));
+                        objValue.SetValue(this, int.Parse(pi.GetValue(this).ToString(), Culture));
                     }
                     else if (pi.PropertyType == typeof(DateTime?))
                     {
@@ -58,14 +60,14 @@ namespace WooCommerceNET.Base
                         object value = objValue.GetValue(this);
 
                         if (!(value == null || value.ToString() == string.Empty))
-                            pi.SetValue(this, decimal.Parse(value.ToString(), CultureInfo.InvariantCulture));
+                            pi.SetValue(this, decimal.Parse(value.ToString(), Culture));
                     }
                     else if (pi.PropertyType == typeof(int?))
                     {
                         object value = objValue.GetValue(this);
 
                         if (!(value == null || value.ToString() == string.Empty))
-                            pi.SetValue(this, int.Parse(value.ToString(), CultureInfo.InvariantCulture));
+                            pi.SetValue(this, int.Parse(value.ToString(), Culture));
                     }
                     else if (pi.PropertyType == typeof(DateTime?))
                     {
@@ -122,7 +124,7 @@ namespace WooCommerceNET.Base
         public List<T> update { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public List<int> delete { get; set; }
+        public List<ulong> delete { get; set; }
 
         [IgnoreDataMember]
         public List<T> DeletedItems { get; set; }
@@ -142,14 +144,9 @@ namespace WooCommerceNET.Base
                 APIEndpoint = typeof(T).BaseType.GetRuntimeProperty("Endpoint").GetValue(null).ToString();
         }
 
-        public virtual async Task<T> Get(int id, Dictionary<string, string> parms = null)
+        public virtual async Task<T> Get(ulong id, Dictionary<string, string> parms = null)
         {
             return API.DeserializeJSon<T>(await API.GetRestful(APIEndpoint + "/" + id.ToString(), parms).ConfigureAwait(false));
-        }
-
-        public virtual async Task<T> Get(string email, Dictionary<string, string> parms = null)
-        {
-            return API.DeserializeJSon<T>(await API.GetRestful(APIEndpoint + "/" + email, parms).ConfigureAwait(false));
         }
 
         public virtual async Task<List<T>> GetAll(Dictionary<string, string> parms = null)
@@ -168,12 +165,12 @@ namespace WooCommerceNET.Base
             return API.DeserializeJSon<BatchObject<T>>(await API.PostRestful(APIEndpoint + "/batch", items, parms).ConfigureAwait(false));
         }
 
-        public virtual async Task<T> Update(int id, T item, Dictionary<string, string> parms = null)
+        public virtual async Task<T> Update(ulong id, T item, Dictionary<string, string> parms = null)
         {
             return API.DeserializeJSon<T>(await API.PostRestful(APIEndpoint + "/" + id.ToString(), item, parms).ConfigureAwait(false));
         }
 
-        public virtual async Task<T> UpdateWithNull(int id, object item, Dictionary<string, string> parms = null)
+        public virtual async Task<T> UpdateWithNull(ulong id, object item, Dictionary<string, string> parms = null)
         {
             if (API.GetType().Name == "RestAPI")
             {
@@ -223,7 +220,7 @@ namespace WooCommerceNET.Base
                     else
                         batchResult = API.DeserializeJSon<BatchObject<T>>(json);
                 }
-                
+
                 return batchResult;
             }
         }
@@ -233,7 +230,7 @@ namespace WooCommerceNET.Base
             return await API.PostRestful(APIEndpoint + "/batch", items, parms).ConfigureAwait(false);
         }
 
-        public virtual async Task<T> Delete(int id, bool force = false, Dictionary<string, string> parms = null)
+        public virtual async Task<T> Delete(ulong id, bool force = false, Dictionary<string, string> parms = null)
         {
             if (force)
             {
@@ -271,7 +268,7 @@ namespace WooCommerceNET.Base
             APIParentEndpoint = parentEndpoint;
         }
 
-        public virtual async Task<T> Get(int id, int parentId, Dictionary<string, string> parms = null)
+        public virtual async Task<T> Get(ulong id, ulong parentId, Dictionary<string, string> parms = null)
         {
             return API.DeserializeJSon<T>(await API.GetRestful(APIParentEndpoint + "/" + parentId.ToString() + "/" + APIEndpoint + "/" + id.ToString(), parms).ConfigureAwait(false));
         }
@@ -281,17 +278,17 @@ namespace WooCommerceNET.Base
             return API.DeserializeJSon<List<T>>(await API.GetRestful(APIParentEndpoint + "/" + parentId.ToString() + "/" + APIEndpoint, parms).ConfigureAwait(false));
         }
 
-        public virtual async Task<T> Add(T item, int parentId, Dictionary<string, string> parms = null)
+        public virtual async Task<T> Add(T item, ulong parentId, Dictionary<string, string> parms = null)
         {
             return API.DeserializeJSon<T>(await API.PostRestful(APIParentEndpoint + "/" + parentId.ToString() + "/" + APIEndpoint, item, parms).ConfigureAwait(false));
         }
 
-        public virtual async Task<T> Update(int id, T item, int parentId, Dictionary<string, string> parms = null)
+        public virtual async Task<T> Update(ulong id, T item, ulong parentId, Dictionary<string, string> parms = null)
         {
             return API.DeserializeJSon<T>(await API.PostRestful(APIParentEndpoint + "/" + parentId.ToString() + "/" + APIEndpoint + "/" + id.ToString(), item, parms).ConfigureAwait(false));
         }
 
-        public virtual async Task<T> UpdateWithNull(int id, int parentId, object item, Dictionary<string, string> parms = null)
+        public virtual async Task<T> UpdateWithNull(ulong id, ulong parentId, object item, Dictionary<string, string> parms = null)
         {
             if (API.GetType().Name == "RestAPI")
             {
@@ -316,42 +313,42 @@ namespace WooCommerceNET.Base
                 return API.DeserializeJSon<T>(await API.PostRestful(APIParentEndpoint + "/" + parentId.ToString() + "/" + APIEndpoint + "/" + id.ToString(), item, parms).ConfigureAwait(false));
         }
 
-        public virtual async Task<BatchObject<T>> UpdateRange(int parentId, BatchObject<T> items, Dictionary<string, string> parms = null)
+        public virtual async Task<BatchObject<T>> UpdateRange(ulong parentId, BatchObject<T> items, Dictionary<string, string> parms = null)
         {
-            string json = await UpdateRangeRaw( parentId, items, parms );
+            string json = await UpdateRangeRaw(parentId, items, parms);
 
-            if ( items.delete == null || items.delete.Count == 0 )
-                return API.DeserializeJSon<BatchObject<T>>( json );
+            if (items.delete == null || items.delete.Count == 0)
+                return API.DeserializeJSon<BatchObject<T>>(json);
             else
             {
                 BatchObject<T> batchResult = new BatchObject<T>();
 
-                if ( ( items.create == null || items.create.Count == 0 ) && ( items.update == null || items.update.Count == 0 ) )
+                if ((items.create == null || items.create.Count == 0) && (items.update == null || items.update.Count == 0))
                 {
-                    batchResult.DeletedItems = API.DeserializeJSon<List<T>>( json.Substring( json.IndexOf( "[" ) ).TrimEnd( '}' ) );
+                    batchResult.DeletedItems = API.DeserializeJSon<List<T>>(json.Substring(json.IndexOf("[")).TrimEnd('}'));
                 }
                 else
                 {
-                    var pos = json.LastIndexOf( "\"delete\":[" );
-                    if ( pos != -1 )
+                    var pos = json.LastIndexOf("\"delete\":[");
+                    if (pos != -1)
                     {
-                        batchResult = API.DeserializeJSon<BatchObject<T>>( json.Substring( 0, pos - 1 ) + "}" );
-                        batchResult.DeletedItems = API.DeserializeJSon<List<T>>( json.Substring( pos + 9 ).TrimEnd( '}' ) );
+                        batchResult = API.DeserializeJSon<BatchObject<T>>(json.Substring(0, pos - 1) + "}");
+                        batchResult.DeletedItems = API.DeserializeJSon<List<T>>(json.Substring(pos + 9).TrimEnd('}'));
                     }
                     else
-                        batchResult = API.DeserializeJSon<BatchObject<T>>( json );
+                        batchResult = API.DeserializeJSon<BatchObject<T>>(json);
                 }
 
                 return batchResult;
             }
         }
 
-        public virtual async Task<string> UpdateRangeRaw(int parentId, BatchObject<T> items, Dictionary<string, string> parms = null)
+        public virtual async Task<string> UpdateRangeRaw(ulong parentId, BatchObject<T> items, Dictionary<string, string> parms = null)
         {
             return await API.PostRestful(APIParentEndpoint + "/" + parentId.ToString() + "/" + APIEndpoint + "/batch", items, parms).ConfigureAwait(false);
         }
 
-        public virtual async Task<string> Delete(int id, int parentId, bool force = false, Dictionary<string, string> parms = null)
+        public virtual async Task<string> Delete(ulong id, ulong parentId, bool force = false, Dictionary<string, string> parms = null)
         {
             if (force)
             {

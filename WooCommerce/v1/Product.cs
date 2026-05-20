@@ -16,7 +16,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Product name.
@@ -237,6 +237,8 @@ namespace WooCommerceNET.WooCommerce.v1
         /// <summary>
         /// Stock management at product level. Default is false.
         /// When Manage stock is checked, string value "parent" will be given, otherwise, it will be bool value false.
+        /// The "parent" should appear in Variation object, however, when getting Products with variation SKU as parameter, 
+        /// variation object with "parent" value returned in product endpoints. That's why we have to set manage_stock type as object in Product object as well.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
         public object manage_stock { get; set; }
@@ -345,25 +347,25 @@ namespace WooCommerceNET.WooCommerce.v1
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public List<int> related_ids { get; set; }
+        public List<ulong> related_ids { get; set; }
 
         /// <summary>
         /// List of up-sell products IDs (integer). Up-sells are products which you recommend instead of the currently viewed product, for example, products that are more profitable or better quality or more expensive.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public List<int> upsell_ids { get; set; }
+        public List<ulong> upsell_ids { get; set; }
 
         /// <summary>
         /// List of cross-sell products IDs. Cross-sells are products which you promote in the cart, based on the current product.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public List<int> cross_sell_ids { get; set; }
+        public List<ulong> cross_sell_ids { get; set; }
 
         /// <summary>
         /// Product parent ID (post_parent).
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? parent_id { get; set; }
+        public ulong? parent_id { get; set; }
 
         /// <summary>
         /// Optional note to send the customer after purchase.
@@ -453,7 +455,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// Category ID.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Category name. 
@@ -477,7 +479,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// Tag ID.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Tag name. 
@@ -501,7 +503,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// Image ID (attachment ID). In write-mode used to attach pre-existing images.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// The date the image was created, in the site’s timezone. 
@@ -552,7 +554,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// Attribute ID (required if is a global attribute).
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Attribute name (required if is a non-global attribute).
@@ -592,7 +594,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// Attribute ID (required if is a global attribute).
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Attribute name (required if is a non-global attribute).
@@ -639,7 +641,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// The date the variation was created, in the site’s timezone. 
@@ -850,7 +852,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// Attribute ID (required if is a global attribute).
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Attribute name (required if is a non-global attribute).
@@ -873,7 +875,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Attribute name. 
@@ -915,7 +917,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Term name. 
@@ -951,7 +953,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// The id for the parent of the resource.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? parent { get; set; }
+        public ulong? parent { get; set; }
 
         /// <summary>
         /// HTML description of the resource.
@@ -992,7 +994,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// Image ID (attachment ID). In write-mode used to attach pre-existing images.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// The date the image was created, in the site’s timezone. 
@@ -1038,7 +1040,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Shipping class name. 
@@ -1078,7 +1080,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Tag name. 
@@ -1115,7 +1117,7 @@ namespace WooCommerceNET.WooCommerce.v1
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// The date the review was created, in the site’s timezone. 

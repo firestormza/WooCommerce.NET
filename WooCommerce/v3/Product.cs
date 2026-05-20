@@ -17,7 +17,7 @@ namespace WooCommerceNET.WooCommerce.v3
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// Product name.
@@ -252,9 +252,12 @@ namespace WooCommerceNET.WooCommerce.v3
 
         /// <summary>
         /// Stock management at product level. Default is false.
+        /// When Manage stock is checked, string value "parent" will be given, otherwise, it will be bool value false.
+        /// The "parent" should appear in Variation object, however, when getting Products with variation SKU as parameter, 
+        /// variation object with "parent" value returned in product endpoints. That's why we have to set manage_stock type as object in Product object as well.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public bool? manage_stock { get; set; }
+        public object manage_stock { get; set; }
 
         [DataMember(EmitDefaultValue = false, Name = "stock_quantity")]
         protected object stock_quantityValue { get; set; }
@@ -360,25 +363,25 @@ namespace WooCommerceNET.WooCommerce.v3
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public List<int> related_ids { get; set; }
+        public List<ulong> related_ids { get; set; }
 
         /// <summary>
         /// List of up-sell products IDs.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public List<int> upsell_ids { get; set; }
+        public List<ulong> upsell_ids { get; set; }
 
         /// <summary>
         /// List of cross-sell products IDs.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public List<int> cross_sell_ids { get; set; }
+        public List<ulong> cross_sell_ids { get; set; }
 
         /// <summary>
         /// Product parent ID.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? parent_id { get; set; }
+        public ulong? parent_id { get; set; }
 
         /// <summary>
         /// Optional note to send the customer after purchase.
@@ -391,6 +394,12 @@ namespace WooCommerceNET.WooCommerce.v3
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
         public List<ProductCategoryLine> categories { get; set; }
+
+        /// <summary>
+        /// List of brands. See Product - Brands properties
+        /// </summary>
+        [DataMember(EmitDefaultValue = false)]
+        public List<ProductCategoryLine> brands { get; set; }
 
         /// <summary>
         /// List of tags. See Product - Tags properties
@@ -421,14 +430,14 @@ namespace WooCommerceNET.WooCommerce.v3
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public List<int> variations { get; set; }
+        public List<ulong> variations { get; set; }
 
         /// <summary>
         /// List of grouped products ID. 
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public List<int> grouped_products { get; set; }
+        public List<ulong> grouped_products { get; set; }
 
         /// <summary>
         /// Menu order, used to custom sort products.
@@ -447,6 +456,12 @@ namespace WooCommerceNET.WooCommerce.v3
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
         public ProductError error { get; set; }
+        
+        /// <summary>
+        /// Product GTIN, UPC, EAN o ISBN
+        /// </summary>
+        [DataMember(EmitDefaultValue = false)]
+        public string global_unique_id { get; set; }
     }
 
     [DataContract]
@@ -539,7 +554,7 @@ namespace WooCommerceNET.WooCommerce.v3
         /// read-only
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? id { get; set; }
+        public ulong? id { get; set; }
 
         /// <summary>
         /// The date the review was created, in the site’s timezone.
@@ -557,7 +572,7 @@ namespace WooCommerceNET.WooCommerce.v3
         /// Unique identifier for the product that the review belongs to.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
-        public uint? product_id { get; set; }
+        public ulong? product_id { get; set; }
 
         /// <summary>
         /// Status of the review. Options: approved, hold, spam, unspam, transh and untrash. Defauls to approved.
